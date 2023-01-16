@@ -7,6 +7,7 @@ class Product
    protected float $price;
    protected string $description;
    protected int $inStock;
+   protected string $image;
 
    function __construct($_type, $_name, $_category, $_price)
    {
@@ -133,6 +134,26 @@ class Product
    {
 
       $this->inStock = $inStock;
+
+      return $this;
+   }
+
+   /**
+    * Get the value of image
+    */
+   public function getImage()
+   {
+      return $this->image;
+   }
+
+   /**
+    * Set the value of image
+    *
+    * @return  self
+    */
+   public function setImage($image)
+   {
+      $this->image = $image;
 
       return $this;
    }
