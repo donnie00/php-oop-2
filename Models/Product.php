@@ -3,17 +3,17 @@ class Product
 {
    protected string $name;
    protected string $category;
+   protected string $type;
    protected float $price;
    protected string $description;
-   protected bool $inStock;
+   protected int $inStock;
 
-   function __construct($_name, $_category, $_price, $_description, $_inStock)
+   function __construct($_type, $_name, $_category, $_price)
    {
       $this->setName($_name);
       $this->setCategory($_category);
+      $this->setType($_type);
       $this->setPrice($_price);
-      $this->setDescription($_description);
-      $this->setInStock($_inStock);
    }
 
    /**
@@ -52,6 +52,26 @@ class Product
    public function setCategory($category)
    {
       $this->category = $category;
+
+      return $this;
+   }
+
+   /**
+    * Get the value of type
+    */
+   public function getType()
+   {
+      return $this->type;
+   }
+
+   /**
+    * Set the value of type
+    *
+    * @return  self
+    */
+   public function setType($type)
+   {
+      $this->type = $type;
 
       return $this;
    }
@@ -111,12 +131,9 @@ class Product
     */
    public function setInStock($inStock)
    {
-      if ($inStock) {
-         $this->inStock = true;
-      } else {
-         $this->inStock = false;
-      }
 
       $this->inStock = $inStock;
+
+      return $this;
    }
 }

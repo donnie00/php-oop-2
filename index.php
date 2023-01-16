@@ -1,11 +1,28 @@
 <?php
-require_once __DIR__ . "/Models/Product.php";
+require_once "./Models/Food.php";
+require_once "./Models/Game.php";
+require_once "./Models/Wearable.php";
 
-$dog = new Product('Pico', 'dog', '23', 'Just a little dog nothing more', true);
+$dog = new Product('pet', 'Pico', 'dog', '23.4', 'Just a little dog nothing more', true);
+$dogFood = new Food('superdog', 'dog', 33.2, '2022-1-2', 33);
+$dogBall = new Games('ball', 'dog', '5.99', 'plastic', 'red');
+$dogCollar = new Wearable('Collar', 'dog', 5.99, 'M');
+
+$dog->setDescription('Just a little dog');
+$dog->setInStock('40');
 
 echo '<pre>';
 echo '$dog' . '<br />';
 print_r($dog);
+
+echo '$dogFood' . '<br />';
+print_r($dogFood);
+
+echo '$dogBall' . '<br />';
+print_r($dogBall);
+
+echo '$dogCollar' . '<br />';
+print_r($dogCollar);
 echo '</pre>';
 
 
