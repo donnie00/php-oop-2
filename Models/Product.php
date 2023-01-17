@@ -62,7 +62,7 @@ class Product
     */
    public function getType()
    {
-      return $this->type;
+      return ucfirst($this->type);
    }
 
    /**

@@ -59,20 +59,21 @@ $productListClasses = array_map(function ($item) {
                   <img src="<?php echo $product->getImage() ?>" class="card-img-top" alt="...">
 
                   <div class="card-body">
-                     <?php if ($product->getCategory() === 'Cat') { ?>
-                        <small class="text-muted">
+                     <small class="text-muted">
+                        <?php if ($product->getCategory() === 'Cat') { ?>
                            <i class="fa-solid fa-cat"></i>
-                        </small>
-                     <?php } else if ($product->getCategory() === 'Dog') { ?>
-                        <small class="text-muted">
+                        <?php } else if ($product->getCategory() === 'Dog') { ?>
                            <i class="fa-solid fa-dog"></i>
-                        </small>
-                     <?php } ?>
+                        <?php } ?>
+                        /
+                        <?php echo $product->getType() ?>
+                     </small>
+
                      <h5 class="card-title"><?php echo $product->getName() ?></h5>
                      <p class="card-text"><?php echo $product->getDescription() ?></p>
                      <p class="card-text">&euro;<?php echo $product->getPrice() ?></p>
                      <p class="card-text">
-                        <?php method_exists($product, 'getWeigth') ? $product->getWeigth() : '' ?>
+                        <?php (method_exists($product, 'getWeigth') ? $product->getWeigth() : '') ?>
                      </p>
                   </div>
                </div>
