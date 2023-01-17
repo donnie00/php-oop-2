@@ -1,24 +1,35 @@
 <?php
 require_once "./Models/Product.php";
+require_once "./Models/Category.php";
 require_once "./Models/Food.php";
 require_once "./Models/Game.php";
 require_once "./Models/Wearable.php";
+require_once "./Models/User.php";
+require_once "./Models/CreditCard.php";
 include "./productList.php";
 
+$catCategory = new Category('Cat', 'fas fa-cat');
+$dogCategory = new Category('Dog', 'fas fa-dog');
 
+$user1 = new User('Donnie');
+$user1->setCreditCard(new creditCard(1234567, '2022-2-3', 'Donnie'));
 
 $productListClasses = array_map(function ($item) {
 
    $toReturn = null;
 
-   if ($item['type'] === 'food') {
-      $toReturn = new Food($item['name'], $item['category'], $item['price'], $item['expiryDate'], $item['weight']);
-   } else if ($item['type'] === 'game') {
-      $toReturn =  new Games($item['name'], $item['category'], $item['price'], $item['material'], $item['color']);
-   } else if ($item['type'] === 'wearable') {
-      $toReturn = new Wearable($item['name'], $item['category'], $item['price'], $item['size']);
-   } else {
-      $toReturn = new Product($item['type'], $item['name'], $item['category'], $item['price']);
+   switch ($item['type']) {
+      case 'food':
+         $toReturn = new Food($item['name'], new Category($item['category']), $item['price'], $item['expiryDate'], $item['weight']);
+         break;
+      case 'game':
+         $toReturn =  new Games($item['name'], new Category($item['category']), $item['price'], $item['material'], $item['color']);
+         break;
+      case 'wearable':
+         $toReturn = new Wearable($item['name'], new Category($item['category']), $item['price'], $item['size']);
+         break;
+      default:
+         $toReturn = new Product($item['type'], $item['name'], new Category($item['category']), $item['price']);
    }
 
    $toReturn->setDescription($item['description']);
@@ -27,11 +38,7 @@ $productListClasses = array_map(function ($item) {
    return $toReturn;
 }, $productList);
 
-
-// echo '<pre>';
-// print_r($productListClasses);
-// echo '</pre>';
-
+$user1->setCart([$productListClasses[0], $productListClasses[1], $productListClasses[4]]);
 ?>
 
 
@@ -51,13 +58,46 @@ $productListClasses = array_map(function ($item) {
 
    <div class="container">
 
-      <header class="d-flex align-items-center justify-content-between">
-         <h1 class="my-3">My online shop</h1>
-         <span>
-            Guest
-            <i class="fa-solid fa-user mx-2"></i>
-         </span>
+      <header class="d-flex align-items-center justify-content-between my-3">
+         <h1>My online shop</h1>
+         <div>
+            <p>
+               <?php echo $user1->getUserName() ?>
+               <i class="fa-solid fa-user mx-2"></i>
+            </p>
+            <p>Credit Card:
+               <?php if ($user1->getCreditCard()->checkExpired()) {
+                  echo "<span class='text-danger'>EXPIRED</span>";
+               } else {
+                  echo "<span class='text-success'>OK</span>";
+               } ?>
+            </p>
+         </div>
       </header>
+
+      <div class="">
+         <h5>Your cart</h5>
+         <ul class="list-inline">
+            <?php foreach ($user1->getCart() as $cartItem) { ?>
+               <li class="list-inline-item text-bg-light p-2 rounded-2"><?php echo $cartItem->getName() . " " . $cartItem->getPrice() . '&euro;' ?></li>
+            <?php } ?>
+         </ul>
+         <h5>
+            Total: <?php if ($user1->isRegistered()) : ?>
+               <span class="text-decoration-line-through">
+                  <?php echo "{$user1->getPrice()}&euro;" ?>
+               </span>
+               <i class="fa-solid fa-arrow-right mx-3"></i>
+               <span>
+                  <?php echo "{$user1->getFinalPrice()}&euro;" ?>
+               </span>
+            <?php else : ?>
+               <?php echo "{$user1->getFinalPrice()}&euro;" ?>
+               <i class="fa-solid fa-arrow-right"></i>
+               <span>Ottieni uno sconto del 20&percnt; registrandoti!</span>
+            <?php endif ?>
+         </h5>
+      </div>
 
       <div class="row">
          <?php foreach ($productListClasses as $product) { ?>
@@ -67,11 +107,7 @@ $productListClasses = array_map(function ($item) {
 
                   <div class="card-body">
                      <small class="text-muted">
-                        <?php if ($product->getCategory() === 'Cat') { ?>
-                           <i class="fa-solid fa-cat"></i>
-                        <?php } else if ($product->getCategory() === 'Dog') { ?>
-                           <i class="fa-solid fa-dog"></i>
-                        <?php } ?>
+                        <?php echo $product->getCategory()->getIconClass() ?>
                         /
                         <?php echo $product->getType() ?>
                      </small>
@@ -111,7 +147,7 @@ $productListClasses = array_map(function ($item) {
                      <span class="card-text">
                         &euro;<?php echo $product->getPrice() ?>
                      </span>
-                     <button href="#" class="btn btn-primary ms-3 d-inline">Add to cart</button>
+                     <button class="btn btn-primary ms-3 d-inline">Add to cart</button>
                   </div>
                </div>
             </div>
