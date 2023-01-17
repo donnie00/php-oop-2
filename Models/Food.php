@@ -21,7 +21,7 @@ class Food extends Product
     */
    public function getExpiryDate()
    {
-      return $this->expiryDate;
+      return $this->expiryDate->format('d-m-Y');
    }
 
    /**

@@ -1,19 +1,21 @@
 <?php
 class Product
 {
-   protected string $name;
-   protected string $category;
    protected string $type;
+   protected string $name;
+   //Private?
+   protected string $category;
    protected float $price;
    protected string $description;
+   // static? private?
    protected int $inStock;
    protected string $image;
 
    function __construct($_type, $_name, $_category, $_price)
    {
+      $this->setType($_type);
       $this->setName($_name);
       $this->setCategory($_category);
-      $this->setType($_type);
       $this->setPrice($_price);
    }
 

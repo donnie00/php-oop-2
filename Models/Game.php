@@ -3,7 +3,7 @@ require_once __DIR__ . '/Product.php';
 
 class Games extends Product
 {
-   protected string $type = 'Games';
+   protected string $type = 'Game';
 
    protected string $material;
    protected string $color;
