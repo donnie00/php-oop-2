@@ -1,10 +1,11 @@
 <?php
+require_once __DIR__ . '/Category.php';
 class Product
 {
    protected string $type;
    protected string $name;
    //Private?
-   protected string $category;
+   protected Category $category;
    protected float $price;
    protected string $description;
    // static? private?
@@ -52,9 +53,9 @@ class Product
     *
     * @return  self
     */
-   public function setCategory($category)
+   public function setCategory($_category)
    {
-      $this->category = $category;
+      $this->category = $_category;
 
       return $this;
    }
@@ -104,7 +105,11 @@ class Product
     */
    public function getDescription()
    {
-      return $this->description;
+      if ($this->description === '') {
+         return $this->description = 'No description added';
+      } else {
+         return $this->description;
+      }
    }
 
    /**
