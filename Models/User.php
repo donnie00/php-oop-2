@@ -97,6 +97,26 @@ class User
       return $this;
    }
 
+   /**
+    * Get the value of discount
+    */
+   public function getDiscount()
+   {
+      return $this->discount;
+   }
+
+   /**
+    * Set the value of discount
+    *
+    * @return  self
+    */
+   public function setDiscount($discount)
+   {
+      $this->discount = $discount;
+
+      return $this;
+   }
+
    public function isRegistered()
    {
       $registered = false;

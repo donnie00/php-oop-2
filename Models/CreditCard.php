@@ -37,7 +37,7 @@ class creditCard
     */
    public function getExpiryDate()
    {
-      return $this->expiryDate;
+      return $this->expiryDate->format('d/m/Y');
    }
 
    /**
@@ -47,10 +47,9 @@ class creditCard
     */
    public function setExpiryDate($expiryDate)
    {
-      $createDate = new DateTime($expiryDate);
-      $formattedDate = $createDate->format('d/m/Y');
+      $newDate = new DateTime($expiryDate);
 
-      $this->expiryDate = $formattedDate;
+      $this->expiryDate = $newDate;
 
       return $this;
    }
@@ -79,10 +78,7 @@ class creditCard
    {
       $expired = false;
 
-      $todayDate = new DateTime();
-      $formattedToday = $todayDate->format('d/m/Y');
-
-      if ($this->getExpiryDate() <= $formattedToday) {
+      if ($this->expiryDate <= new DateTime()) {
          $expired = true;
       }
 

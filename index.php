@@ -12,7 +12,7 @@ $catCategory = new Category('Cat', 'fas fa-cat');
 $dogCategory = new Category('Dog', 'fas fa-dog');
 
 $user1 = new User('Donnie');
-$user1->setCreditCard(new creditCard(1234567, '2022-2-3', 'Donnie'));
+$user1->setCreditCard(new creditCard(1234567, '2023-2-3', 'Donnie'));
 
 $productListClasses = array_map(function ($item) {
 
@@ -39,6 +39,7 @@ $productListClasses = array_map(function ($item) {
 }, $productList);
 
 $user1->setCart([$productListClasses[0], $productListClasses[1], $productListClasses[4]]);
+
 ?>
 
 
@@ -75,7 +76,7 @@ $user1->setCart([$productListClasses[0], $productListClasses[1], $productListCla
          </div>
       </header>
 
-      <div class="">
+      <div>
          <h5>Your cart</h5>
          <ul class="list-inline">
             <?php foreach ($user1->getCart() as $cartItem) { ?>
